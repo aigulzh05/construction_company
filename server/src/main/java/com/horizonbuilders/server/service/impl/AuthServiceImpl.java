@@ -20,6 +20,7 @@ public class AuthServiceImpl implements AuthService {
     final AuthenticationManager authenticationManager;
     final JwtUtils jwtUtils;
     final RefreshTokenService refreshTokenService;
+
     @Override
     public LoginResponse authenticate(String username, String password) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
