@@ -23,11 +23,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     final RefreshTokenRepository refreshTokenRepository;
     @Value("${jwt_refresh_token_expiration_in_hours}")
     long jwt_refresh_token_expiration_in_hours;
+
     @Override
     public String generateRefreshToken(User user) {
 
         RefreshToken refreshToken = null;
-        if(refreshTokenRepository.existsByUser(user)) {
+        if (refreshTokenRepository.existsByUser(user)) {
             refreshToken = refreshTokenRepository.findByUser(user)
                     .orElseThrow(UserNotFoundException::new);
             refreshTokenRepository.delete(refreshToken);
@@ -39,10 +40,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     private RefreshToken generateCompleteNewRefreshToken(User user) {
         return refreshTokenRepository.save(
                 RefreshToken.builder()
-                .refreshToken(UUID.randomUUID().toString())
-                .user(user)
-                .expirityDate(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * jwt_refresh_token_expiration_in_hours))
-                .build()
+                        .refreshToken(UUID.randomUUID().toString())
+                        .user(user)
+                        .expirityDate(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * jwt_refresh_token_expiration_in_hours))
+                        .build()
         );
     }
 }

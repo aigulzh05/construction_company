@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RefreshToken extends DefaultModel{
+public class RefreshToken extends DefaultModel {
     @OneToOne
     User user;
     String refreshToken;
