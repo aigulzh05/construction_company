@@ -1,7 +1,9 @@
 package com.horizonbuilders.server.controller;
 
 import com.horizonbuilders.server.dto.LoginRequest;
+import com.horizonbuilders.server.dto.LoginResponse;
 import com.horizonbuilders.server.jwt.JwtUtils;
+import com.horizonbuilders.server.service.AuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,16 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthController {
-    final AuthenticationManager authenticationManager;
-    final JwtUtils jwtUtils;
+
+    final AuthService authService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                loginRequest.username(), loginRequest.password()
-        );
-        authenticationManager.authenticate(token);
-        String jwtToken = jwtUtils.generate(loginRequest.username());
-        return ResponseEntity.ok(jwtToken);
+    public LoginResponse authenticate(@RequestBody LoginRequest loginRequest) {
+        return authService.authenticate(loginRequest.username(), loginRequest.password());
     }
 }
