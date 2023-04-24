@@ -12,4 +12,6 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Inte
     Optional<RefreshToken> findByUser(User user);
 
     boolean existsByUser(User user);
+
+    Optional<RefreshToken> findByRefreshToken(String refreshToken);
 }
