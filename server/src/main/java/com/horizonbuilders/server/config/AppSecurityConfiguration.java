@@ -22,23 +22,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AppSecurityConfiguration {
-    final UserDetailsService userDetailsService;
-    final PasswordEncoder passwordEncoder;
-    final JwtAuthenticationProvider jwtAuthenticationProvider;
-    final JwtFilter jwtFilter;
-
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
             "/api-docs/**",
             "/v3/api-docs/**",
             "/webjars/**"
     };
+    final UserDetailsService userDetailsService;
+    final PasswordEncoder passwordEncoder;
+    final JwtAuthenticationProvider jwtAuthenticationProvider;
+    final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/authenticate").permitAll()
+                        .requestMatchers("/api/authenticate").permitAll()
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(jwtAuthenticationProvider)

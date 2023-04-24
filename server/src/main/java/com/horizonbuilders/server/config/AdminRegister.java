@@ -15,9 +15,10 @@ import java.util.Set;
 public class AdminRegister implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
-        if(!userRepository.existsByUsername("username")) {
+        if (!userRepository.existsByUsername("username")) {
             userRepository.save(
                     User.builder()
                             .username("username")
