@@ -33,13 +33,13 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
-        if(authHeader == null || !authHeader.startsWith("Bearer")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = authHeader.split(" ")[1].trim();
-        if(!jwtUtils.validate(token)) {
+        if (!jwtUtils.validate(token)) {
             filterChain.doFilter(request, response);
             return;
         }
