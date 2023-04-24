@@ -1,6 +1,6 @@
 package com.horizonbuilders.server.jwt;
 
-import com.horizonbuilders.server.exception.BadCredentialsException;
+import com.horizonbuilders.server.exception.BadRequestException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -34,7 +34,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 return token;
             }
         }
-        throw new BadCredentialsException("Username or password is incorrect!");
+        throw new BadRequestException("Username or password is incorrect!");
     }
 
     @Override
