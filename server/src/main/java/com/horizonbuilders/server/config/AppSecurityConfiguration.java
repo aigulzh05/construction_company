@@ -1,5 +1,6 @@
 package com.horizonbuilders.server.config;
 
+import com.horizonbuilders.server.jwt.AuthEntryPoint;
 import com.horizonbuilders.server.jwt.JwtAuthenticationProvider;
 import com.horizonbuilders.server.jwt.JwtFilter;
 import lombok.AccessLevel;
@@ -11,8 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -22,24 +21,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AppSecurityConfiguration {
-    private static final String[] AUTH_WHITELIST = {
+
+    final JwtAuthenticationProvider jwtAuthenticationProvider;
+    final JwtFilter jwtFilter;
+    final AuthEntryPoint authEntryPoint;
+
+    private static final String[] SWAGGER_WHITELIST = {
             "/swagger-resources/**",
             "/api-docs/**",
             "/v3/api-docs/**",
-            "/webjars/**"
+            "/webjars/**",
+            "/error/**"
     };
-    final UserDetailsService userDetailsService;
-    final PasswordEncoder passwordEncoder;
-    final JwtAuthenticationProvider jwtAuthenticationProvider;
-    final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/authenticate").permitAll()
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
                         .anyRequest().authenticated())
+                .exceptionHandling().authenticationEntryPoint(authEntryPoint)
+                .and()
                 .authenticationProvider(jwtAuthenticationProvider)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
