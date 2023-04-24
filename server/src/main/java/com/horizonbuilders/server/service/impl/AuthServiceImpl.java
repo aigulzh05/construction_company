@@ -1,6 +1,6 @@
 package com.horizonbuilders.server.service.impl;
 
-import com.horizonbuilders.server.dto.LoginResponse;
+import com.horizonbuilders.server.dto.response.LoginResponse;
 import com.horizonbuilders.server.jwt.JwtUtils;
 import com.horizonbuilders.server.model.User;
 import com.horizonbuilders.server.service.AuthService;
