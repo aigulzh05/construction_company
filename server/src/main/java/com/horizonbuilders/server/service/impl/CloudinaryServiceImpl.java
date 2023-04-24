@@ -22,10 +22,10 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     public String upload(MultipartFile multipartFile) throws IOException {
         return String.valueOf(
                 cloudinary.uploader()
-                .upload(multipartFile.getBytes(), ObjectUtils.asMap(
-                        "quality",50
-                ))
-                .get("secure_url")
+                        .upload(multipartFile.getBytes(), ObjectUtils.asMap(
+                                "quality", 50
+                        ))
+                        .get("secure_url")
         );
     }
 }
