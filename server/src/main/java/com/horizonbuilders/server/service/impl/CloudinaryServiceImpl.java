@@ -2,7 +2,6 @@ package com.horizonbuilders.server.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.horizonbuilders.server.config.CloudinaryConfiguration;
 import com.horizonbuilders.server.service.CloudinaryService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
