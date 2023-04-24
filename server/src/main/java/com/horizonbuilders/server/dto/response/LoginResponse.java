@@ -1,4 +1,4 @@
-package com.horizonbuilders.server.dto;
+package com.horizonbuilders.server.dto.response;
 
 import lombok.Builder;
 
