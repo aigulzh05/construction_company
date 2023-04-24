@@ -21,11 +21,24 @@ public class RuntimeExceptionsHandler {
                 .build();
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({
+            UserNotFoundException.class,
+            ResourceNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse userNotFoundHandling(UserNotFoundException exception, WebRequest request) {
+    public ErrorResponse userNotFoundHandling(Exception exception, WebRequest request) {
         return ErrorResponse.builder()
                 .statusCode(HttpStatus.NOT_FOUND.value())
+                .timeStamp(new Date())
+                .message(exception.getMessage())
+                .description(request.getDescription(false))
+                .build();
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse unauthorizedHandling(UnauthorizedException exception, WebRequest request) {
+        return ErrorResponse.builder()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
                 .timeStamp(new Date())
                 .message(exception.getMessage())
                 .description(request.getDescription(false))
