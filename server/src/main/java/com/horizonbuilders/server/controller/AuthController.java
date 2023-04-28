@@ -5,6 +5,8 @@ import com.horizonbuilders.server.dto.request.RefreshAccessTokenRequest;
 import com.horizonbuilders.server.dto.response.LoginResponse;
 import com.horizonbuilders.server.service.AuthService;
 import com.horizonbuilders.server.service.RefreshTokenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +25,13 @@ public class AuthController {
     final AuthService authService;
     final RefreshTokenService refreshTokenService;
 
+    @SecurityRequirements
     @PostMapping("/authenticate")
     public LoginResponse authenticate(@RequestBody LoginRequest loginRequest) {
         return authService.authenticate(loginRequest.username(), loginRequest.password());
     }
 
+    @SecurityRequirements
     @PostMapping("/refresh-token")
     public LoginResponse refreshAccessTokenByRefreshToken(@Valid @RequestBody RefreshAccessTokenRequest request) {
         return refreshTokenService.generateAccessTokenByRefreshToken(request);

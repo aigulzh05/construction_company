@@ -13,12 +13,12 @@ import java.util.Date;
 @Setter
 public class ErrorResponse {
     int statusCode;
-    String timeStamp;
+    String timestamp;
     String message;
     String description;
 
     public ErrorResponse() {
-        this.timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        this.timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 }
 
