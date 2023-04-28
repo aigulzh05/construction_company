@@ -26,20 +26,26 @@ public class AppSecurityConfiguration {
     final JwtFilter jwtFilter;
     final AuthEntryPoint authEntryPoint;
 
-    private static final String[] SWAGGER_WHITELIST = {
+    private static final String[] WHITELIST = {
+            //swagger
             "/swagger-resources/**",
             "/api-docs/**",
             "/v3/api-docs/**",
             "/webjars/**",
-            "/error/**"
+
+            //errors
+            "/error/**",
+
+            //endpoints
+            "/api/authenticate/**",
+            "/api/refresh-token/**"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/authenticate").permitAll()
-                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .requestMatchers(WHITELIST).permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling().authenticationEntryPoint(authEntryPoint)
                 .and()
