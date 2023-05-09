@@ -19,6 +19,8 @@ target/
 *.iml
 *.ipr
 
+./reactjs-front/.idea/
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
